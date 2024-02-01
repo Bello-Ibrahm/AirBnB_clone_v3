@@ -14,9 +14,6 @@ from os import getenv
 if getenv('HBNB_TYPE_STORAGE') == 'db':
     from models.place import place_amenity
 
-classes = {"User": User, "State": State, "City": City,
-           "Amenity": Amenity, "Place": Place, "Review": Review}
-
 
 class DBStorage:
     """This class manages database of hbnb """
@@ -39,6 +36,9 @@ class DBStorage:
                                        ), pool_pre_ping=True)
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
+
+        self.classes = {"User": User, "State": State, "City": City,
+           "Amenity": Amenity, "Place": Place, "Review": Review}
 
     def all(self, cls=None):
         '''query on the current db session all cls objects
@@ -94,3 +94,20 @@ class DBStorage:
     def close(self):
         """ Close the working SQLAlchemy session """
         self.__session.close()
+
+    def get(self, cls, id):
+        """ Retreives an object by ID """
+        if (cls in self.classes.values() and id and isinstance(id, str)):
+            obj = self.all(cls)
+            for key, val in obj.items():
+                if key.split('.')[1] == id:
+                    return val
+        return (None)
+
+    def count(self, cls=None):
+        """ Counts the number of objects in storage """
+        if (cls in self.classes.values()):
+            data = self.all(cls)
+        else:
+            data = self.all(cls)
+        return len(data)

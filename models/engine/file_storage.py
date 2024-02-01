@@ -50,7 +50,7 @@ class FileStorage:
         from models.amenity import Amenity
         from models.review import Review
 
-        classes = {
+        self.classes = {
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
                     'Review': Review
@@ -68,3 +68,20 @@ class FileStorage:
     def close(self):
         """ Calls reload method """
         self.reload()
+
+    def get(self, cls, id):
+        """ Retreives an object by ID """
+        if (cls in self.classes.values() and id and isinstance(id, str)):
+            obj = self.all(cls)
+            for key, val in obj.items():
+                if key.split('.')[1] == id:
+                    return val
+        return (None)
+
+    def count(self, cls=None):
+        """ Counts the number of objects in storage """
+        if (cls in self.classes.values()):
+            data = self.all(cls)
+        else:
+            data = self.all(cls)
+        return len(data)
