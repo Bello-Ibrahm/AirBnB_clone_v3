@@ -11,6 +11,7 @@ app.register_blueprint(app_views)
 HBNB_API_HOST = getenv('HBNB_API_HOST')
 HBNB_API_PORT = getenv('HBNB_API_PORT')
 
+
 @app.errorhandler(404)
 def not_found(error):
     """ json 404 page """
