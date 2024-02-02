@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-Web server
+App module
 """
+from os import getenv
 from models import storage
 from api.v1.views import app_views
 from flask import Flask, jsonify, make_response
-from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -26,5 +26,5 @@ def close_db_session(obj):
 
 
 if __name__ == "__main__":
-    # python -m api.v1.app
-    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True, debug=False)
+    """ Run the app =>  python -m api.v1.app  """
+    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
