@@ -20,4 +20,4 @@ def not_found(error):
 
 if __name__ == "__main__":
     # python -m api.v1.app
-    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True, debug=True)
+    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True, debug=False)
