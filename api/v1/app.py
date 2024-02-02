@@ -2,6 +2,7 @@
 """
 Web server
 """
+from models import storage
 from api.v1.views import app_views
 from flask import Flask, jsonify, make_response
 from os import getenv
@@ -16,6 +17,12 @@ HBNB_API_PORT = int(getenv('HBNB_API_PORT', default=5000))
 def not_found(error):
     """ json 404 page """
     return make_response(jsonify({"error": "Not found"}), 404)
+
+
+@app.teardown_appcontext
+def close_db_session(obj):
+    """ calls the close() """
+    storage.close()
 
 
 if __name__ == "__main__":
