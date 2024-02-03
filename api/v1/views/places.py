@@ -66,7 +66,7 @@ def create_place(city_id):
         return make_response(jsonify({"error": "Missing name"}), 400)
 
     json_data['city_id'] = city_id
-    
+
     user = storage.get(User, json_data['user_id'])
     if user is None:
         abort(404)
