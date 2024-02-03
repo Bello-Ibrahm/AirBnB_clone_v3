@@ -73,7 +73,7 @@ def create_place(city_id):
 
     obj = Place(**json_data)
     obj.save()
-    return jsonify(obj.to_dict()), 201
+    return (jsonify(obj.to_dict()), 201)
 
 
 @app_views.route("/places/<string:place_id>", methods=['PUT'],
