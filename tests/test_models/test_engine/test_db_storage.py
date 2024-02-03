@@ -2,6 +2,7 @@
 ''' module for file_storage tests '''
 import unittest
 import MySQLdb
+import models
 from models.user import User
 from models import storage
 from datetime import datetime
@@ -174,3 +175,11 @@ class TestDBStorage(unittest.TestCase):
         dbc1.close()
         cursor.close()
         dbc.close()
+
+    @unittest.skipIf(models.storage_type != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get retrieves an item in db properly"""
+
+    @unittest.skipIf(models.storage_type != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the right number of elements in the db"""

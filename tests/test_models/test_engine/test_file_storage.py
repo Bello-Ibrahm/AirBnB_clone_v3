@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Module for testing file storage"""
 import unittest
+import models
 from models.base_model import BaseModel
 from models import storage
 import os
@@ -110,3 +111,12 @@ class test_fileStorage(unittest.TestCase):
         """ FileStorage object storage created """
         from models.engine.file_storage import FileStorage
         self.assertEqual(type(storage), FileStorage)
+
+    @unittest.skipIf(models.storage_type == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get retrieves objects stored in file.json"""
+
+    @unittest.skipIf(models.storage_type == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count returns the right number of objects in file.json"""
+
