@@ -50,25 +50,21 @@ def del_review_by_id(review_id):
 def create_review(place_id):
     """ Create new review object
     """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    json_data = request.get_json()
-    user_id = json_data.get('user_id')
-    text = json_data.get('text')
-
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    if not user_id:
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if 'user_id' not in request.get_json():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    if not text:
+    if 'text' not in request.get_json():
         return make_response(jsonify({"error": "Missing text"}), 400)
-
-    json_data['place_id'] = place_id
-    user = storage.get(User, user_id)
+    kwargs = request.get_json()
+    kwargs['place_id'] = place_id
+    user = storage.get(User, kwargs['user_id'])
     if user is None:
         abort(404)
-    obj = Review(**json_data)
+    obj = Review(**kwargs)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
