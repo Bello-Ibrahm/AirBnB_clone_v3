@@ -50,9 +50,6 @@ def del_place_by_id(place_id):
 def create_place(city_id):
     """ Create new place object
     """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-
     city = storage.get(City, city_id)
     if (city is None):
         abort(404)
@@ -60,6 +57,8 @@ def create_place(city_id):
     json_data = request.get_json()
     user_id = json_data.get('user_id')
     name = json_data.get('name')
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if not user_id:
         return make_response(jsonify({"error": "Missing user_id"}), 404)
     if not name:
