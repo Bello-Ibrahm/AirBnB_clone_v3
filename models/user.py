@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from models import storage_type
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import hashlib
 
 
 class User(BaseModel, Base):
@@ -23,3 +24,13 @@ class User(BaseModel, Base):
         password = ""
         first_name = ""
         last_name = ""
+
+    def __init__(self, *args, **kwargs):
+        """initializes user obj """
+        super().__init__(*args, **kwargs)
+
+    def __setattr__(self, i, j):
+        """sets user pasword"""
+        if i == "password":
+            j = hashlib.md5(j.encode()).hexdigest()
+        super().__setattr__(i, j)

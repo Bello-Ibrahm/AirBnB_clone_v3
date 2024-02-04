@@ -53,7 +53,7 @@ class BaseModel:
         storage.new(self)
         storage.save()
 
-    def to_dict(self):
+    def to_dict(self, secure_pwd=True):
         """Convert instance into dict format"""
         dic = dict(self.__dict__)
         dic["__class__"] = str(type(self).__name__)
@@ -61,6 +61,9 @@ class BaseModel:
         dic["updated_at"] = self.updated_at.isoformat()
         if '_sa_instance_state' in dic.keys():
             del dic['_sa_instance_state']
+        if (secure_pwd):
+            if 'password' in dic:
+                del dic['password']
         return dic
 
     def __repr__(self):
