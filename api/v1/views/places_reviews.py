@@ -68,7 +68,7 @@ def create_review(place_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    obj = Riview(**json_data)
+    obj = Review(**json_data)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
