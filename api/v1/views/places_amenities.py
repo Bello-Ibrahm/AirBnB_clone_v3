@@ -44,7 +44,8 @@ def handle_amenity_method(place_id, amenity_id):
             place.amenities.remove(amenity)
         else:
             place.amenity_ids.pop(amenity.id, None)
-        place.save()
+        # place.save()
+        storage.save()
         return (jsonify({}), 200)
 
     if request.method == 'POST':
