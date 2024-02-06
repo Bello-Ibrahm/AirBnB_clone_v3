@@ -10,7 +10,7 @@ from models.place import Place
 
 @app_views.route("/places/<string:place_id>/amenities", methods=['GET'],
                  strict_slashes=False)
-def get_all_amenities(place_id):
+def get_all_amenities(place_id=None):
     """ Retrieves all amenities by its place_id
     """
     place = storage.get(Place, place_id)
@@ -22,7 +22,7 @@ def get_all_amenities(place_id):
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['DELETE', 'POST'], strict_slashes=False)
-def handle_amenity_method(place_id, amenity_id):
+def handle_amenity_method(place_id=None, amenity_id=None):
     """ Review route to handle http methods
     DELETE:
         deletes a Amenity object to a Place
@@ -39,7 +39,7 @@ def handle_amenity_method(place_id, amenity_id):
     if request.method == 'DELETE':
         if (amenity not in place.amenities and
                 amenity.id not in place.amenities):
-            abort(404, 'Not found')
+            abort(404)
         if storage_type == 'db':
             place.amenities.remove(amenity)
         else:
