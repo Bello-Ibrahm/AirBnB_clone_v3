@@ -23,7 +23,7 @@ def get_all_review(place_id):
 
 @app_views.route('/review/<string:review_id>', methods=['GET'],
                  strict_slashes=False)
-def get_review_by_id(review_id):
+def get_review_by_id(review_id=None):
     """ Retrieves review by its id
     """
     review = storage.get(Review, review_id)
@@ -34,7 +34,7 @@ def get_review_by_id(review_id):
 
 @app_views.route("/reviews/<string:review_id>", methods=['DELETE'],
                  strict_slashes=False)
-def del_review_by_id(review_id):
+def del_review_by_id(review_id=None):
     """ Deletes review by its id
     """
     review = storage.get(Review, review_id)
@@ -47,7 +47,7 @@ def del_review_by_id(review_id):
 
 @app_views.route("/places/<string:place_id>/reviews", methods=['POST'],
                  strict_slashes=False)
-def create_review(place_id):
+def create_review(place_id=None):
     """ Create new review object
     """
     if not request.get_json():
