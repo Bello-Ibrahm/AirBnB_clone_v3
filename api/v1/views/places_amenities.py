@@ -40,12 +40,11 @@ def handle_amenity_method(place_id=None, amenity_id=None):
         if (amenity not in place.amenities and
                 amenity.id not in place.amenities):
             abort(404)
-        """ if storage_type == 'db':
+        if storage_type == 'db':
             place.amenities.remove(amenity)
         else:
             place.amenity_ids.pop(amenity.id, None)
-        # place.save()"""
-        place.amenities.remove(amenity)
+        # place.save()
         storage.save()
         return (jsonify({}), 200)
 
