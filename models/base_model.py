@@ -53,30 +53,18 @@ class BaseModel:
         storage.new(self)
         storage.save()
 
-     def to_dict(self):
-        """ Comments """
+    def to_dict(self, secure_pwd=True):
+        """Convert instance into dict format"""
         dic = dict(self.__dict__)
         dic["__class__"] = str(type(self).__name__)
         dic["created_at"] = self.created_at.isoformat()
         dic["updated_at"] = self.updated_at.isoformat()
         if '_sa_instance_state' in dic.keys():
             del dic['_sa_instance_state']
-        return dic 
-
-    """ def to_dict(self, secure_pwd=True):
-        # returns a dictionary containing all keys/values of the instance
-        new_dict = self.__dict__.copy()
-        if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
-        if secure_pwd:
-            if 'password' in new_dict:
-                del new_dict['password']
-        return new_dict """
+        if (secure_pwd):
+            if 'password' in dic:
+                del dic['password']
+        return dic
 
     def __repr__(self):
         """return a string representaion
