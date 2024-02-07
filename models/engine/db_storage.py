@@ -37,8 +37,11 @@ class DBStorage:
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        self.classes = {"User": User, "State": State, "City": City,
-           "Amenity": Amenity, "Place": Place, "Review": Review}
+        self.classes = {
+                "User": User, "State": State,
+                "City": City, "Amenity": Amenity,
+                "Place": Place, "Review": Review
+                }
 
     def all(self, cls=None):
         '''query on the current db session all cls objects
