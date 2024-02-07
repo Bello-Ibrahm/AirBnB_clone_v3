@@ -3,7 +3,7 @@
 """
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
-from models import storage, storage_t
+from models import storage, storage_type
 from models.amenity import Amenity
 from models.place import Place
 
@@ -40,7 +40,7 @@ def handle_amenity_method(place_id=None, amenity_id=None):
         if (amenity not in place.amenities and
                 amenity.id not in place.amenities):
             abort(404)
-        if storage_t == 'db':
+        if storage_type == 'db':
             place.amenities.remove(amenity)
         else:
             place.amenity_ids.pop(amenity.id, None)
@@ -52,7 +52,7 @@ def handle_amenity_method(place_id=None, amenity_id=None):
         if (amenity in place.amenities or
                 amenity.id in place.amenities):
             return (jsonify(amenity.to_dict()), 200)
-        if storage_t == 'db':
+        if storage_type == 'db':
             place.amenities.append(amenity)
         else:
             place.amenities = amenity
